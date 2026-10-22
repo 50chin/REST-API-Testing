@@ -1,0 +1,277 @@
+{
+  "info": {
+    "_postman_id": "2de19281-fe1c-479a-bbf1-5e40f02e5c15",
+    "name": "JSONPlaceholder API Testing",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "50880896",
+    "_collection_link": "https://go.postman.co/collection/50880896-2de19281-fe1c-479a-bbf1-5e40f02e5c15?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "GET Get user by ID",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "\npm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"Response is JSON\", function () {\n    pm.response.to.be.json;\n});\n\npm.test(\"User ID is 1\", function () {\n    const response = pm.response.json();\n    pm.expect(response.id).to.eql(1);\n});\n\npm.test(\"User has required fields\", function () {\n    const response = pm.response.json();\n\n    pm.expect(response).to.have.property(\"name\");\n    pm.expect(response).to.have.property(\"email\");\n    pm.expect(response).to.have.property(\"username\");\n});\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Get all users",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "\npm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"Response is an array\", function () {\n    const response = pm.response.json();\n    pm.expect(response).to.be.an(\"array\");\n});\n\npm.test(\"Users list is not empty\", function () {\n    const response = pm.response.json();\n    pm.expect(response.length).to.be.greaterThan(0);\n});\n\npm.test(\"Each user has an ID and email\", function () {\n    const response = pm.response.json();\n\n    response.forEach(function (user) {\n        pm.expect(user).to.have.property(\"id\");\n        pm.expect(user).to.have.property(\"email\");\n    });\n});\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Get non-existent user",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "\npm.test(\"Status code is 404\", function () {\n    pm.response.to.have.status(404);\n});\n\npm.test(\"Response is an empty object\", function () {\n    const response = pm.response.json();\n    pm.expect(response).to.be.an(\"object\");\n    pm.expect(Object.keys(response)).to.have.lengthOf(0);\n});\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "999"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Get user with invalid ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "\npm.test(\"Status code is 404\", function () {\n    pm.response.to.have.status(404);\n});\n\npm.test(\"Response is an empty object\", function () {\n    const response = pm.response.json();\n    pm.expect(response).to.be.an(\"object\");\n    pm.expect(Object.keys(response)).to.have.lengthOf(0);\n});\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/abc",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "abc"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Posts",
+      "item": [
+        {
+          "name": "GET Get post by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "\npm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"Post ID is 1\", function () {\n    const response = pm.response.json();\n    pm.expect(response.id).to.eql(1);\n});\n\npm.test(\"Post has required fields\", function () {\n    const response = pm.response.json();\n\n    pm.expect(response).to.have.property(\"userId\");\n    pm.expect(response).to.have.property(\"title\");\n    pm.expect(response).to.have.property(\"body\");\n});\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/posts/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Get all posts",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"Response is an array\", function () {\n    const response = pm.response.json();\n    pm.expect(response).to.be.an(\"array\");\n});\n\npm.test(\"Posts list is not empty\", function () {\n    const response = pm.response.json();\n    pm.expect(response.length).to.be.greaterThan(0);\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/posts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Comments",
+      "item": [
+        {
+          "name": "GET Get comment by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "\npm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"Comment ID is 1\", function () {\n    const response = pm.response.json();\n    pm.expect(response.id).to.eql(1);\n});\n\npm.test(\"Comment has required fields\", function () {\n    const response = pm.response.json();\n\n    pm.expect(response).to.have.property(\"postId\");\n    pm.expect(response).to.have.property(\"name\");\n    pm.expect(response).to.have.property(\"email\");\n    pm.expect(response).to.have.property(\"body\");\n});\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/comments/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "comments",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Get comments by post ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "\npm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"Response is an array\", function () {\n    const response = pm.response.json();\n    pm.expect(response).to.be.an(\"array\");\n});\n\npm.test(\"All comments belong to post 1\", function () {\n    const response = pm.response.json();\n\n    response.forEach(function (comment) {\n        pm.expect(comment.postId).to.eql(1);\n    });\n});\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/posts/1/comments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "posts",
+                "1",
+                "comments"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://jsonplaceholder.typicode.com"
+    }
+  ]
+}
